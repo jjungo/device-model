@@ -9,6 +9,20 @@ enum i2c_freq {
 	i2c_freq_400KHz,
 };
 
+enum i2c_mode {
+	i2c_mode_master,
+	i2c_mode_slave,
+};
+
+enum i2c_bus {
+	i2c_bus_0,
+	i2c_bus_1,
+	i2c_bus_2,
+	i2c_bus_3,
+	i2c_bus_4,
+	i2c_bus_max
+};
+
 struct i2c_bus_conf {
 	int bus_id;
 	uint8_t device_addr; /**< 7 bits device address */
@@ -29,6 +43,6 @@ static inline int i2c_read(struct device* dev, uint8_t addr, uint8_t* buffer, si
 	return api->read(dev, addr, buffer, len);
 }
 
-struct device* i2c_get_instance(int bus_id);
+struct device* i2c_get_instance(enum i2c_bus bus_id);
 
 #endif

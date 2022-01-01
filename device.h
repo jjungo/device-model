@@ -14,16 +14,20 @@ struct device {
 };
 
 #define DEVICE_DEF(_name, _init_fn, _deinit_fn, _api, _config, _data) \
-	struct device(_name) = {                                          \
-	        .init = (_init_fn),                                       \
-	        .deinit = (_deinit_fn),                                   \
-	        .api = (_api),                                            \
-	        .config = (_config),                                      \
-	        .data = (_data),                                          \
-	};
+	struct device(_name) = DEVICE_ASSIGN((_init_fn), (_deinit_fn), (_api), (_config), (_data));
+
+#define DEVICE_ASSIGN(_init_fn, _deinit_fn, _api, _config, _data) \
+	{                                                             \
+	        .init = (_init_fn),                                   \
+	        .deinit = (_deinit_fn),                               \
+	        .api = (_api),                                        \
+	        .config = (_config),                                  \
+	        .data = (_data),                                      \
+	}
 
 enum device_instance {
-	device_i2c_dev,
+	device_i2c_dev0,
+	device_i2c_dev1,
 	device_icm4000,
 	device_max,
 };

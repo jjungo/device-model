@@ -4,11 +4,12 @@
 
 #define ARRAY_SIZE(x) (sizeof((x)) / sizeof(((x)[0])))
 
-extern struct device i2c_device;
+extern struct device i2c_devices[];
 extern struct device icm_4000_device;
 
 static struct device const* all_devices[] = {
-        [device_i2c_dev] = &i2c_device,
+        [device_i2c_dev0] = &i2c_devices[0],
+        [device_i2c_dev1] = &i2c_devices[1],
         [device_icm4000] = &icm_4000_device,
 };
 
