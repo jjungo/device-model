@@ -1,0 +1,39 @@
+#include "device.h"
+#include <stddef.h>
+
+
+#define ARRAY_SIZE(x) (sizeof((x)) / sizeof(((x)[0])))
+
+extern struct device i2c_device;
+extern struct device icm_4000_device;
+
+static struct device const* all_devices[] = {
+        [device_i2c_dev] = &i2c_device,
+        [device_icm4000] = &icm_4000_device,
+};
+
+
+static int init_all_devices(struct device const** devs, size_t len) {
+	for (unsigned int i = 0; i < len; i++) {
+		struct device* dev = devs[i];
+		if (!dev->init) { continue; }
+		int r = dev->init(dev);
+		if (r) {
+			return r;
+		}
+	}
+
+	return 0;
+}
+
+int device_init() {
+	return init_all_devices(all_devices, ARRAY_SIZE(all_devices));
+}
+
+struct device* device_get(enum device_instance device_instance) {
+	if (device_instance >= device_max) {
+		return NULL;
+	}
+
+	return all_devices[device_instance];
+}
