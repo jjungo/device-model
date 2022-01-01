@@ -5,6 +5,15 @@
 #include "device.h"
 #include "i2c.h"
 
+#define I2C_CONF_ASSIGN(_bus_id, _gpio_scl, _gpio_sda, _freq, _mode) \
+	{                                                                \
+		.bus_id = (_bus_id),                                         \
+		.gpio_scl = (_gpio_scl),                                     \
+		.gpio_sda = (_gpio_sda),                                     \
+		.freq = (_freq),                                             \
+		.mode = (_mode),                                             \
+	}
+
 #define get_data(_dev) ((_dev)->data)
 #define get_conf(_dev) ((_dev)->config)
 
@@ -68,30 +77,14 @@ static struct i2c_priv private_data[I2C_BUSES] = {
 };
 
 static const struct i2c_conf conf[I2C_BUSES] = {
-        [i2c_bus_0] = {
-                .bus_id = i2c_bus_0,
-                .gpio_scl = 32,
-                .gpio_sda = 33,
-                .freq = i2c_freq_400KHz,
-                .mode = i2c_mode_master,
-
-        },
-
-        [i2c_bus_1] = {
-                .bus_id = i2c_bus_1,
-                .gpio_scl = 45,
-                .gpio_sda = 46,
-                .freq = i2c_freq_100KHz,
-                .mode = i2c_mode_master,
-        },
-
+        [i2c_bus_0] = I2C_CONF_ASSIGN(i2c_bus_0, 32, 33, i2c_freq_400KHz, i2c_mode_master),
+        [i2c_bus_1] = I2C_CONF_ASSIGN(i2c_bus_1, 42, 43, i2c_freq_100KHz, i2c_mode_master),
 };
 
 static struct i2c_api api = {
         .write = write,
         .read = read,
 };
-
 
 struct device i2c_devices[I2C_BUSES] = {
         [i2c_bus_0] = DEVICE_ASSIGN(i2c_init, i2c_deinit, &api, &conf[0], &private_data[0]),
