@@ -14,6 +14,7 @@ struct i2c_priv {
 	int a, b;
 };
 struct i2c_conf {
+	enum i2c_bus bus_id;
 	int gpio_sda;
 	int gpio_scl;
 	enum i2c_freq freq;
@@ -24,7 +25,7 @@ static int i2c_init(struct device* dev) {
 	struct i2c_priv* data = get_data(dev);
 	const struct i2c_conf* conf = get_conf(dev);
 
-	printf("[%s]: a %d b %d\n", __FUNCTION__, data->a, data->b);
+	printf("[%s]: a %d b %d bus: %d\n", __FUNCTION__, data->a, data->b, conf->bus_id);
 	if (dev->config) {
 		printf("config is present\n");
 	}
@@ -38,15 +39,17 @@ static int i2c_deinit(struct device* dev) {
 
 static int write(struct device* dev, uint8_t addr, const uint8_t* buffer, size_t len) {
 	struct i2c_priv* data = get_data(dev);
-	printf("[%s]: a %d b %d\n", __FUNCTION__, data->a, data->b);
+	const struct i2c_conf* conf = get_conf(dev);
+
+	printf("[%s]: a %d b %d bus: %d\n", __FUNCTION__, data->a, data->b, conf->bus_id);
 
 	return 0;
 }
 
 static int read(struct device* dev, uint8_t addr, uint8_t* buffer, size_t len) {
 	struct i2c_priv* data = get_data(dev);
-	printf("[%s]: a %d b %d\n", __FUNCTION__, data->a, data->b);
-	printf("[%s]: addr: 0x%02x, bufer: %p, len: %zu \n", __FUNCTION__, addr, buffer, len);
+	const struct i2c_conf* conf = get_conf(dev);
+	printf("[%s]: a %d b %d bus: %d\n", __FUNCTION__, data->a, data->b, conf->bus_id);
 	return 0;
 }
 
@@ -64,15 +67,18 @@ static struct i2c_priv private_data[I2C_BUSES] = {
 
 };
 
-const static struct i2c_conf conf[I2C_BUSES] = {
+static const struct i2c_conf conf[I2C_BUSES] = {
         [i2c_bus_0] = {
+                .bus_id = i2c_bus_0,
                 .gpio_scl = 32,
                 .gpio_sda = 33,
                 .freq = i2c_freq_400KHz,
                 .mode = i2c_mode_master,
+
         },
 
         [i2c_bus_1] = {
+                .bus_id = i2c_bus_1,
                 .gpio_scl = 45,
                 .gpio_sda = 46,
                 .freq = i2c_freq_100KHz,

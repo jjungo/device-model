@@ -215,7 +215,7 @@ static struct icm_4000_priv icm_4000_priv_data = {
 static struct icm_4000_config config = {
         .int_pin = 34,
         .i2c = {
-                .bus_id = 0,
+                .bus_id = i2c_bus_0,
                 .device_addr = 0x43,
         },
 };

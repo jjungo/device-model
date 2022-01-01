@@ -24,7 +24,7 @@ enum i2c_bus {
 };
 
 struct i2c_bus_conf {
-	int bus_id;
+	enum i2c_bus bus_id;
 	uint8_t device_addr; /**< 7 bits device address */
 };
 
