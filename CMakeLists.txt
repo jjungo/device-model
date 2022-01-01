@@ -9,7 +9,7 @@ add_executable(device_model
         main.c
         device.h
         device.c
-        i2c.c
+        i2c_mcu_impl.c
         i2c.h
         icm4000.c
         icm4000.h
