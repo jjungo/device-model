@@ -24,7 +24,7 @@ int main() {
 	accel_setup_conf(icm_4000, &icm_conf);
 	int lpf = 15;
 
-	r = accel_set_conf(icm_4000, accel_lpf, &lpf);
+	r = accel_set_attrib(icm_4000, accel_lpf, &lpf);
 
 	accel_setup_event(icm_4000, accel_event_tap_detected, 1);
 	accel_register_data_cb(icm_4000, NULL);

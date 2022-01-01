@@ -76,7 +76,7 @@ static int set_lpf(struct device* dev, int lpf) {
 }
 
 
-static int set_conf(struct device* dev, enum accel_conf_type type, void* data) {
+static int set_attrib(struct device* dev, enum accel_conf_type type, void* data) {
 	printf("[%s]\n", __FUNCTION__);
 
 	int r = 0;
@@ -222,7 +222,7 @@ static struct icm_4000_config config = {
 
 static struct accel_api api = {
         .setup_conf = setup_conf,
-        .set_conf = set_conf,
+        .set_attrib= set_attrib,
         .setup_event = setup_event,
         .register_data_cb = register_data_cb,
         .powerdown = powerdown,
