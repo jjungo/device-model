@@ -20,29 +20,13 @@ struct i2c_api {
 };
 
 static inline int i2c_write(struct device* dev, uint8_t addr, const uint8_t* buffer, size_t len) {
-	if (!dev) {
-		return -1;
-	}
-
 	struct i2c_api* api = dev->api;
-	if (api && api->write) {
-		return api->write(dev, addr, buffer, len);
-	}
-
-	return 0;
+	return api->write(dev, addr, buffer, len);
 }
 
 static inline int i2c_read(struct device* dev, uint8_t addr, uint8_t* buffer, size_t len) {
-	if (!dev) {
-		return -1;
-	}
-
 	struct i2c_api* api = dev->api;
-	if (api && api->read) {
-		return api->read(dev, addr, buffer, len);
-	}
-
-	return 0;
+	return api->read(dev, addr, buffer, len);
 }
 
 struct device* i2c_get_instance(int bus_id);
