@@ -76,6 +76,27 @@ static int set_lpf(struct device* dev, int lpf) {
 }
 
 
+static int get_fsr(struct device* dev, int* fsr) {
+	struct icm_4000_priv* icm = dev->data;
+	*fsr = icm->fsr;
+	printf("[%s] fsr: %d\n", __FUNCTION__, *fsr);
+	return 0;
+}
+
+static int get_rate(struct device* dev, int* rate) {
+	struct icm_4000_priv* icm = dev->data;
+	*rate = icm->rate_hz;
+	printf("[%s] rate: %d\n", __FUNCTION__, *rate);
+	return 0;
+}
+
+static int get_lpf(struct device* dev, int* lpf) {
+	struct icm_4000_priv* icm = dev->data;
+	*lpf = icm->lpf;
+	printf("[%s] lpf: %d\n", __FUNCTION__, *lpf);
+	return 0;
+}
+
 static int set_attrib(struct device* dev, enum accel_conf_type type, void* data) {
 	printf("[%s]\n", __FUNCTION__);
 
@@ -89,6 +110,28 @@ static int set_attrib(struct device* dev, enum accel_conf_type type, void* data)
 			break;
 		case accel_rate_hz:
 			r = set_rate(dev, *(int*) data);
+			break;
+		default:
+			return -1;
+	}
+
+	return r;
+}
+
+
+static int get_attrib(struct device* dev, enum accel_conf_type type, void* data) {
+	printf("[%s]\n", __FUNCTION__);
+
+	int r = 0;
+	switch (type) {
+		case accel_fsr:
+			r = get_fsr(dev, (int*) data);
+			break;
+		case accel_lpf:
+			r = get_lpf(dev, (int*) data);
+			break;
+		case accel_rate_hz:
+			r = get_rate(dev, (int*) data);
 			break;
 		default:
 			return -1;
@@ -222,7 +265,8 @@ static struct icm_4000_config config = {
 
 static struct accel_api api = {
         .setup_conf = setup_conf,
-        .set_attrib= set_attrib,
+        .set_attrib = set_attrib,
+        .get_attrib = get_attrib,
         .setup_event = setup_event,
         .register_data_cb = register_data_cb,
         .powerdown = powerdown,

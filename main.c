@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdio.h>
 
 #include "icm4000.h"
@@ -30,6 +31,10 @@ int main() {
 	accel_register_data_cb(icm_4000, NULL);
 	struct accel_new_sample sample = {0};
 	accel_read_sample(icm_4000, &sample);
+
+	int r_lpf = 0;
+	accel_get_attrib(icm_4000, accel_lpf, &r_lpf);
+	assert(r_lpf == lpf);
 
 	accel_powerdown(icm_4000);
 	return r;
