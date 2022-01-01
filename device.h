@@ -26,6 +26,7 @@ struct device {
 	}
 
 enum device_instance {
+	device_spi_dev0,
 	device_i2c_dev0,
 	device_i2c_dev1,
 	device_icm4000,

@@ -11,6 +11,8 @@ add_executable(device_model
         device.c
         i2c_mcu_impl.c
         i2c.h
+        spi.h
+        spi_mcu_impl.c
         icm4000.c
         icm4000.h
         accel.h
