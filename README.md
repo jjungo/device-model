@@ -1,9 +1,9 @@
 # device_model
 
-This is a small idea how to create a device model where private data member
-of a driver is not exposed to the client in the header file. The idea also
+This is a small idea how to create a device model where private data members
+of a driver are not exposed to the client in the header file. The idea also
 is to avoid to use a opaque pointer because it is a bit a mess to handle 
-allocation and dependancies.
+allocation and dependancy injection.
 
 Here I show a simple imaginary accelerometer device (icm4000) that implement
 an interface `accel`. The icm4000 depends on a `i2c` interface as a bus 
