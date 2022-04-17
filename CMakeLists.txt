@@ -1,11 +1,11 @@
 include(CheckCCompilerFlag)
 cmake_minimum_required(VERSION 3.15)
 
-project(device_model
+project(device-model
         LANGUAGES C CXX)
 
 
-add_executable(device_model
+add_executable(device-model
         main.c
         device.h
         device.c
@@ -19,7 +19,7 @@ add_executable(device_model
         )
 
 
-target_compile_options(device_model PRIVATE
+target_compile_options(device-model PRIVATE
         -Wall
         -Wextra
         -Wshift-count-overflow
@@ -27,5 +27,5 @@ target_compile_options(device_model PRIVATE
         )
 
 
-add_custom_command(TARGET device_model POST_BUILD
-        COMMAND size device_model)
+add_custom_command(TARGET device-model POST_BUILD
+        COMMAND size device-model)

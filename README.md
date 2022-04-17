@@ -1,4 +1,4 @@
-# device_model
+# device-model
 
 This is a small idea how to create a device model where private data members
 of a driver are not exposed to the client in the header file. The idea also
